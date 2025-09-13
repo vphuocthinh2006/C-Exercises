@@ -1,0 +1,124 @@
+/** TO MY NOTION:
+
+                                               ,----'   `-,
+
+                     ___,-'~~~`---'~~~~`-----' ,-'        \,
+
+             ___,---'          '        ,-~~~~~            :
+
+        ,--'                 ,        ; ;       ) "   _   \,
+
+   _,--'     ,                 ,'      :: "  ;  ` ,'  (\o\)  |
+
+  / _,       `,                     ,  `; " ;    (     `~~ `'\
+
+ ; /         ,`               ,     `    ~~~`. " ;   _     ,  `.
+
+,'/          ` ,              `     ` ,  ,    \_/ ?   ;    )   `.
+
+:;:            `                      `  ` ,     uu`--(___(    ~:
+
+:::          , ,  ,            ,   ;     , `  ,-'      \~(  ~   :
+
+||:          ` `  `         ,  ` ,'    ( ` ,-          \ \   ~:
+
+:|`.        , ,  ,          `_   ;       ) );            \__>   :
+
+|:  : ;     ` `  ` ;  __,--~~ `-(         ( |              `.  ~|
+
+:|  :         ` __,--'           :  ()    : :               |~  ;
+
+|;  |  `     ,-'    ;             :  )(   | `.         /(   `. ~|
+
+::  :   ~  _/;     ;               |   )  :  :        ; /    ;~ ;
+
+{}  ;     /  :   ~ :               :      ; ,;        : `._,-  ,
+
+{} /~    /   ;    ;                 : ,  |  `;         `.___,-'
+
+  ;~    ;    ;  ~ `.                | `  )   ;
+
+  :`    \    `;~   \                ;~   `-, `-.     VOI24
+
+  `.__OOO;    `;_OOO;               )_____OO;_(O)
+
+   ~~~~~~       ~~~~                ~~~~~~~~ ~~~~
+
+   */
+
+#include<bits/stdc++.h>
+////Ta thuat
+//#pragma GCC optimize("O2")
+//#pragma GCC target("avx,avx2,fma")
+#define MOD 1000000007
+#define fi first
+#define se second
+#define int long long
+#define ii pair<int,int>
+#define Dennis "Top1Server"
+#define Jack1e "DB bainao"
+#define heap_max(a) priority_queue<a>
+#define heap_min(a) priority_queue<a, vector<a>, greater <a>>
+#define all(x) (x).begin(), (x).end()
+#define pb push_back
+#define eb emplace_back
+#define el cout << '\n'
+#define rep(i, n) for(int i = 0; i < (n); i++)
+#define For(i, a, b) for(int i = (a); i <= (b); i++)
+#define Fod(i, a, b) for(int i = (a); i >= (b); i--)
+#define bit(x, i) ((x >> i) & 1)
+using namespace std;
+template <class X, class Y> bool minimize(X &a, Y b){
+    if (a > b) return a = b, true;
+    return false;
+}
+
+template <class X, class Y> bool maximize(X &a, Y b){
+    if (a < b) return a = b, true;
+    return false;
+}
+mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
+int rnd(int l, int r) {return l + rng() % (r - l + 1);}
+const int N = 1e6 + 5;
+void file()
+{
+    ios_base::sync_with_stdio(0);
+    cin.tie(0); cout.tie(0);
+//    freopen("input.txt", "r", stdin);
+//    freopen("output.txt", "w", stdout);
+}
+int major[1001][1001];
+int minor[1001][1001];
+main(){
+	int n, m; cin >> n;
+	int a[n+1][n+1];
+	for(int i = 1; i <= n; i++){
+		for(int j = 1; j <= n; j++){
+			cin >> a[i][j];
+		}
+	}
+	for(int i = 1; i<=n;i++){
+		for(int j = 1; j<=n; j++){
+			if(i==1||j==1) major[i][j] = a[i][j];
+			else major[i][j] = major[i-1][j-1] + a[i][j];
+		}
+	}
+	for(int i = 1; i<=n;i++){
+		for(int j = 1; j<=n; j++){
+			if(i==1 || j==1) minor[i][j] = a[i][j];
+			else minor[i][j] = minor[i-1][j+1] + a[i][j];
+		}
+	}
+	int ans = INT_MIN;
+	for(int i = 1; i<=n; i++){
+		for(int j = 1; j<=n; j++){
+			int tmp = min(i, j);
+			int hang = i - tmp, cot = j - tmp;
+			for(int k = 0; k < tmp;k++){
+				ans = max(ans, 0ll + major[i][j] - major[hang+k][cot+k] - (minor[i][cot+k+1] - minor[hang+k][j+1]));
+			}
+		}
+	}
+	cout << ans;
+  return 0;
+}
